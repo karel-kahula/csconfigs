@@ -41,6 +41,25 @@ while :; do
             exit 1
             ;;
 
+        -c|--counter-strike-dir)
+            if [ "$2" ]; then
+                csdir=$2
+                shift 2
+                continue
+            else
+                show_usage
+                exit 1
+            fi
+            ;;
+        --counter-strike-dir=?*)
+            csdir=${1#*=} # delete everything up to '=' and assign remainder.
+            shift
+            ;;
+        --counter-strike-dir=) # empty profile case
+            show_usage
+            exit 1
+            ;;
+
         --) # end of options
             shift
             break
@@ -54,7 +73,9 @@ while :; do
     esac
 done
 
-echo $profile
+echo csdir: $csdir
+echo profile: $profile
+exit 0
 
 cd "$csdir"
 for f in $configs; do

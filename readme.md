@@ -9,7 +9,6 @@ if you are a linux user.
 - make default user profile truly a vanilla setting
 - fuzzy profile name matching
 - mac support
-- flag to specify directory
 - list available profiles
 
 Send friend requests and butt pics here to [my Steam profile](http://steamcommunity.com/id/guff/).
