@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 profile=my_profile
-csdir="~/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
+csdir="/home/karel/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
 configs="config.cfg autoexec.cfg"
 configdir=$(readlink -f $(dirname "$0"))
 date=$(date +%Y%m%d)
@@ -73,13 +73,9 @@ while :; do
     esac
 done
 
-echo csdir: $csdir
-echo profile: $profile
-exit 0
-
 cd "$csdir"
 for f in $configs; do
-    if [[ -L "$f" && -d "$f" ]]; then
+    if [ -L "$f" ] && [ -d "$f" ]; then
         unlink "$f"
     elif [ -f $f ]; then
         mv "$f" "$f.$date.bk"
