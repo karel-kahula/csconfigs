@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+csdir="/home/karel/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
+configs="config.cfg autoexec.cfg"
+configdir=$(pwd)
+cd "$csdir"
+
+for f in $configs; do
+    if [[ -L "$f" && -d "$f" ]]; then
+        rm "$f"
+    elif [ -f $f ]; then
+        mv "$f" "$f.bk"
+    fi
+    ln -s "$configdir/$f" "$f"
+done
+
+
