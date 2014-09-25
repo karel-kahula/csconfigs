@@ -1,17 +1,15 @@
 #!/bin/bash
 set -e
-csdir="/home/karel/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
+csdir="~/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
 configs="config.cfg autoexec.cfg"
 configdir=$(pwd)
+date=$(date +%Y%m%d)
 cd "$csdir"
-
 for f in $configs; do
     if [[ -L "$f" && -d "$f" ]]; then
-        rm "$f"
+        unlink "$f"
     elif [ -f $f ]; then
-        mv "$f" "$f.bk"
+        mv "$f" "$f.$date.bk"
     fi
     ln -s "$configdir/$f" "$f"
 done
-
-
