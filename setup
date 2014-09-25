@@ -3,7 +3,7 @@ set -e
 profile=my_profile
 csdir="~/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
 configs="config.cfg autoexec.cfg"
-configdir=$(pwd)
+configdir=$(readlink -f $(dirname "$0"))
 date=$(date +%Y%m%d)
 
 show_usage() {
