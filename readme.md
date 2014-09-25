@@ -7,3 +7,4 @@ if you are a linux user.
 - setup script to handle profiles
 - add a bunch of player profiles
 - cases where configs include/exclude other config files. ie. userconfig.cfg
+- make default user profile truly a vanilla setting
