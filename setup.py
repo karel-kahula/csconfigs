@@ -30,13 +30,13 @@ def switch_profile(options, args):
 
     for cfg in configs:
         cfg_source = os.path.join(profile_dir, cfg)
+        cfg_dest = os.path.join(options.csgo_dir,cfg)
+        if os.path.exists(cfg_dest) and os.path.islink(cfg_dest):
+            os.unlink(cfg_dest)
+        elif os.path.exists(cfg_dest):
+            shutl.move(cfg_dest, os.path.join(options.csg_dir,
+                "%s.%s.bk" % (cfg,today)))
         if os.path.exists(cfg_source):
-            cfg_dest = os.path.join(options.csgo_dir,cfg)
-            if os.path.exists(cfg_dest) and os.path.islink(cfg_dest):
-                os.unlink(cfg_dest)
-            elif os.path.exists(cfg_dest):
-                shutl.move(cfg_dest, os.path.join(options.csg_dir,
-                    "%s.%s.bk" % (cfg,today)))
             # finally create link here
             os.symlink(cfg_source, cfg_dest)
 
