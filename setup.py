@@ -19,6 +19,15 @@ today = time.strftime("%Y%m%d")
 configs_dir= os.path.dirname(os.path.realpath(__file__))
 
 
+def list_profiles():
+    profiles = [x[1] for x in os.walk(os.path.join(configs_dir,'profiles'))][0]
+    if len(profiles) < 1:
+        print "There do not appear to be any profiles available."
+        exit(1)
+    for p in sorted(profiles,key=str.lower):
+        print p
+
+
 def switch_profile(options):
     profile_dir = os.path.join(configs_dir, 'profiles', options.profile)
     if not os.path.exists(profile_dir):
@@ -51,11 +60,14 @@ def main():
         help="The CS:GO cfg directory", metavar="DIR",default=cs_dir)
     #op.add_option("-i","--import",action="store_true",dest="do_import",
         #default=False, help="Copy exiting configurations to `my_profile` before creating symlinks")
-    #op.add_option("-l","--list",action="store_true",dest="list_profiles",
-        #default=False, help="Lists all currently available configuration profiles")
+    op.add_option("-l","--list",action="store_true",dest="list_profiles",
+        default=False, help="List all currently available configuration profiles and exit")
 
     options, args = op.parse_args()
-    switch_profile(options)
+    if options.list_profiles:
+        list_profiles()
+    else:
+        switch_profile(options)
     exit(0)
 
 if __name__ == '__main__':

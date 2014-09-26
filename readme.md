@@ -23,7 +23,6 @@ sh setup -p GeT_RiGhT
 - make default user profile truly a vanilla setting
 - fuzzy profile name matching
 - mac support
-- list available profiles
 - import a user's existing config
 
 Send friend requests and butt pics here to [my Steam profile](http://steamcommunity.com/id/guff/).
