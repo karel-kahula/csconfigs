@@ -19,23 +19,26 @@ configs_dir= os.path.dirname(os.path.realpath(__file__))
 
 
 def switch_profile(options, args):
-    # check that cs_dir exists
-    if os.path.exists(options.csgo_dir):
-        for cfg in configs:
-            cfg_source = os.path.join(configs_dir, 'profiles', options.profile, cfg)
-            if os.path.exists(cfg_source):
-                cfg_dest = os.path.join(options.csgo_dir,cfg)
-                if os.path.exists(cfg_dest) and os.path.islink(cfg_dest):
-                    os.unlink(cfg_dest)
-                elif os.path.exists(cfg_dest):
-                    shutl.move(cfg_dest, os.path.join(options.csg_dir,
-                        "%s.%s.bk" % (cfg,today)))
-                # finally create link here
-                os.symlink(cfg_source, cfg_dest)
-
-    else:
+    profile_dir = os.path.join(configs_dir, 'profiles', options.profile)
+    if not os.path.exists(profile_dir):
+        print "The profile, '%s', does not appear to exist. Aborting." % \
+            options.profile
+        exit(1)
+    if not os.path.exists(options.csgo_dir):
         print 'The CSGO directory does not appear to exist. Aborting.'
         exit(1)
+
+    for cfg in configs:
+        cfg_source = os.path.join(profile_dir, cfg)
+        if os.path.exists(cfg_source):
+            cfg_dest = os.path.join(options.csgo_dir,cfg)
+            if os.path.exists(cfg_dest) and os.path.islink(cfg_dest):
+                os.unlink(cfg_dest)
+            elif os.path.exists(cfg_dest):
+                shutl.move(cfg_dest, os.path.join(options.csg_dir,
+                    "%s.%s.bk" % (cfg,today)))
+            # finally create link here
+            os.symlink(cfg_source, cfg_dest)
 
 
 def main():
