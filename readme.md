@@ -26,5 +26,6 @@ sh setup -p GeT_RiGhT
 - mac support
 - list available profiles
 - import a user's existing config
+- rewrite setup script in something less tedious
 
 Send friend requests and butt pics here to [my Steam profile](http://steamcommunity.com/id/guff/).
