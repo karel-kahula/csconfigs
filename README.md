@@ -28,6 +28,6 @@ Want to see which profiles are available?
 - mac support
 - import a user's existing config
 
-Send friend requests and butt pics here to [my Steam profile](http://steamcommunity.com/id/guff/).
+Send friend requests and butt pics to [my Steam profile](http://steamcommunity.com/id/guff/).
 
 Thanks to the CSGO team for porting this great game to Linux. Hail Gaben.
