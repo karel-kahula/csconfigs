@@ -9,13 +9,16 @@ If you wish to keep your existing config, copy your config files over those in
 
 Then run the setup script:
 ```
-sh setup
+./setup.py
 ```
-
 If you want to try another available profile, execute the script with the `-p`
 flag:
 ```
-sh setup -p GeT_RiGhT
+./setup.py -p GeT_RiGhT
+```
+Want to see which profiles are available?
+```
+./setup.py -l
 ```
 
 ## To-dos:
