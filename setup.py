@@ -10,15 +10,16 @@ import os
 import time
 import shutil
 from optparse import OptionParser
+from os.path import expanduser
 
 default_profile = "my_profile"
-cs_dir = "/home/karel/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
+cs_dir = os.path.join(expanduser("~"),".steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/")
 configs = ["config.cfg", "autoexec.cfg", "userconfig.cfg"]
 today = time.strftime("%Y%m%d")
 configs_dir= os.path.dirname(os.path.realpath(__file__))
 
 
-def switch_profile(options, args):
+def switch_profile(options):
     profile_dir = os.path.join(configs_dir, 'profiles', options.profile)
     if not os.path.exists(profile_dir):
         print "The profile, '%s', does not appear to exist. Aborting." % \
@@ -53,7 +54,8 @@ def main():
     #op.add_option("-l","--list",action="store_true",dest="list_profiles",
         #default=False, help="Lists all currently available configuration profiles")
 
-    switch_profile(*op.parse_args())
+    options, args = op.parse_args()
+    switch_profile(options)
     exit(0)
 
 if __name__ == '__main__':
