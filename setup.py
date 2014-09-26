@@ -1,86 +1,57 @@
-#!/bin/bash
-set -e
-profile=my_profile
-csdir="/home/karel/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
-configs="config.cfg autoexec.cfg"
-configdir=$(readlink -f $(dirname "$0"))
-date=$(date +%Y%m%d)
+#!/usr/bin/python
+# setup.py
+# Date: September 25, 2014
+# Author: Karel Kahula, kkahula@gmail.com
+#
+# Updates your CSGO configuration to a new one. ez pz lemon squeezy
+#
 
-show_usage() {
-cat << EOF
-Usage: ${0##*/} [-h] [-p PROFILE]
-Back up your existing Counter Strike: Global Offensive configurations and link
-in new ones.
-    -h          display this help and exit
-    -p PROFILE  try to setup the profile by name and exit
-EOF
-}
+import os
+import time
+import shutil
+from optparse import OptionParser
 
-while :; do
-    case $1 in
-        -h|-\?|--help) # show a help message
-            show_usage
-            exit 0
-            ;;
-        -p|--profile) # a profile name has been specified!
-            if [ "$2" ]; then
-                profile=$2
-                shift 2
-                continue
-            else
-                show_usage
-                exit 1
-            fi
-            ;;
-        --profile=?*)
-            profile=${1#*=} # delete everything up to '=' and assign remainder.
-            shift
-            ;;
-        --profile=) # empty profile case
-            show_usage
-            exit 1
-            ;;
+default_profile = "my_profile"
+cs_dir = "/home/karel/.steam/steam/SteamApps/common/Counter-Strike Global Offensive/csgo/cfg/"
+configs = ["config.cfg", "autoexec.cfg", "userconfig.cfg"]
+today = time.strftime("%Y%m%d")
+configs_dir= os.path.dirname(os.path.realpath(__file__))
 
-        -c|--counter-strike-dir)
-            if [ "$2" ]; then
-                csdir=$2
-                shift 2
-                continue
-            else
-                show_usage
-                exit 1
-            fi
-            ;;
-        --counter-strike-dir=?*)
-            csdir=${1#*=} # delete everything up to '=' and assign remainder.
-            shift
-            ;;
-        --counter-strike-dir=) # empty profile case
-            show_usage
-            exit 1
-            ;;
 
-        --) # end of options
-            shift
-            break
-            ;;
-        -?*) # unknown option
-            show_usage
-            exit 1
-            ;;
-        *) # default
-            break
-    esac
-done
+def switch_profile(options, args):
+    # check that cs_dir exists
+    if os.path.exists(options.csgo_dir):
+        for cfg in configs:
+            cfg_source = os.path.join(configs_dir, 'profiles', options.profile, cfg)
+            if os.path.exists(cfg_source):
+                cfg_dest = os.path.join(options.csgo_dir,cfg)
+                if os.path.exists(cfg_dest) and os.path.islink(cfg_dest):
+                    os.unlink(cfg_dest)
+                elif os.path.exists(cfg_dest):
+                    shutl.move(cfg_dest, os.path.join(options.csg_dir,
+                        "%s.%s.bk" % (cfg,today)))
+                # finally create link here
+                os.symlink(cfg_source, cfg_dest)
 
-cd "$csdir"
-for f in $configs; do
-    if [ -L "$f" ] && [ -d "$f" ]; then
-        unlink "$f"
-    elif [ -f $f ]; then
-        mv "$f" "$f.$date.bk"
-    fi
-    ln -s "$configdir/profiles/$profile/$f" "$f"
-done
+    else:
+        print 'The CSGO directory does not appear to exist. Aborting.'
+        exit(1)
 
-exit 0
+
+def main():
+    op = OptionParser()
+    op.add_option("-p","--profile",dest="profile",
+        help="The configuration profile to use", metavar="PROFILE",
+        default=default_profile)
+    op.add_option("-c","--csgo-config-dir", dest="csgo_dir",
+        help="The CS:GO cfg directory", metavar="DIR",default=cs_dir)
+    #op.add_option("-i","--import",action="store_true",dest="do_import",
+        #default=False, help="Copy exiting configurations to `my_profile` before creating symlinks")
+    #op.add_option("-l","--list",action="store_true",dest="list_profiles",
+        #default=False, help="Lists all currently available configuration profiles")
+
+    switch_profile(*op.parse_args())
+    exit(0)
+
+if __name__ == '__main__':
+    main()
