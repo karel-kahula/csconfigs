@@ -21,7 +21,7 @@ Want to see which profiles are available?
 ./setup.py -l
 ```
 
-## To-dos:
+## To-dos
 - add a bunch of player profiles
 - fuzzy profile name matching
 - mac support
@@ -31,4 +31,7 @@ Want to see which profiles are available?
 
 Send friend requests and butt pics to [my Steam profile](http://steamcommunity.com/id/guff/).
 
+## Thanks
 Thanks to the CSGO team for porting this great game to Linux. Hail Gaben.
+
+Thanks to [nickbudi](https://github.com/nickbudi) for [his original autoexec gist](https://gist.github.com/nickbudi/3916475) on Github.
