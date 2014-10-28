@@ -44,7 +44,7 @@ def switch_profile(options):
         if os.path.exists(cfg_dest) and os.path.islink(cfg_dest):
             os.unlink(cfg_dest)
         elif os.path.exists(cfg_dest):
-            shutl.move(cfg_dest, os.path.join(options.csg_dir,
+            shutil.move(cfg_dest, os.path.join(options.csg_dir,
                 "%s.%s.bk" % (cfg,today)))
         if os.path.exists(cfg_source):
             # finally create link here
